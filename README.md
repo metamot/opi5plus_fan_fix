@@ -18,11 +18,23 @@ For example: < A B C D >
 
 "C" is MOST IMPORTANT - it's PERIOD of ns (frequency).
 
+Here is example (Your pwm-fan section can look slight different) :
+
+    pwm-fan {
+        compatible = "pwm-fan";
+        #cooling-cells = <0x02>;
+        pwms = <0x1f2 0x00 0xc350 0x00>;
+        cooling-levels = <0x00 0x32 0x64 0x96 0xc8 0xff>;
+        rockchip,temp-trips = <0xc350 0x01 0xd6d8 0x02 0xea60 0x03 0xfde8 0x04 0x11170 0x05>;
+        status = "okay";
+        phandle = <0x4ac>;
+    };
+
 We can see "50000" or "0xc350", at 3rd parameter. It's 50'000 ns period (0xc350) = 20`000Hz = 20kHz.
 
 Pwm-fan schematic has RC-chain (R23+C16): 10K+100nF.
 
-![alt pwm-fan-schematic](https://github.com/metamot/opi5plus_fan_fix/Untitled.png?raw=true)
+![alt text](https://github.com/metamot/opi5plus_fan_fix/blob/main/Untitled.png?raw=true)
 
 Fc=1/(2pi*R*C)=1/0.00628=160Hz.
 
