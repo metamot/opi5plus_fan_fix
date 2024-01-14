@@ -58,7 +58,7 @@ Here is example:
 
 Take look at pwms record 3rd parameter replaced with 10000000. Your pwm-fan section can look slight different, but only one replacement you need to do, is change 3rd pwms parameter to 10000000.
 
-Compile current text to dtb and replace.
+Compile current text to dtb and replace boot-dtb.
 
     $ dtc -I dts -O dtb -o ~/my-dt/new.dtb ~/my-dt/dts.txt
     $ sudo cp -f ~/my-dt/new.dtb /boot/dtb/rockchip/rk3588-orangepi-5-plus.dtb
