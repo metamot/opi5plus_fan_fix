@@ -21,6 +21,8 @@ We can see "50000" or "0xc350", it's 50'000 ns period = 20`000Hz = 20kHz.
 
 Pwm-fan schematic has RC-chain (R23+C16): 10K+100nF.
 
+![alt pwm-fan-schematic](data:image/png "pwm-fan-schematic").
+
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqYAAAFICAYAAACC3TzwAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKJF9
 kT1Iw1AUhU9btSJVByuIOGSoThZEizhqFYpQIdQKrTqYvPQPmjQkKS6OgmvBwZ/FqoOLs64OroIg
 +APi7OCk6CIl3pcUWsR44fE+zrvn8N59gL9eZqrZMQGommWkEnEhk10Vgq/woQ9dGERMYqY+J4pJ
