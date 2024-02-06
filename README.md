@@ -40,7 +40,8 @@ Fc=1/(2pi*R*C)=1/0.00628=160Hz.
 
 So, current DeviceTree settings with 20kHz acts as DC-voltage control (ON/OFF) with max fan speed under any conditions.
 
-You can desolder C16 capacitor, to solve problem. Or the other way is to reduce pwm frequency to 100Hz.
+~~You can desolder C16 capacitor~~, to solve problem (Can You locate this cap_0402 on unsilcscreeneed pcb?).
+**The other way** is to reduce pwm frequency to 100Hz.
 
 To reduce frequency replace 3rd pwms parameter to "10000000" (one+7zeros) = "10 million" (nanoseconds) = 0.01s = 100Hz.
 
