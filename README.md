@@ -79,3 +79,10 @@ Here is Debian11(Armbian) example.
 Replace "127"(half of 255) with more values like "255"(full-speed), "127"(half-speed), "64 (one-quater-speed)", "192 = 3/4" and etc. 
 
 But sometimes driver will drop in nearest future this value to "0" due current tempereture measurement.
+
+**PS2**: 100Hz, can be 150, 125Hz?
+
+Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at low speed. You can do experiency with something other basic frequencies as 100,125,150, but below then 160Hz.
+
+Some of fans are really silent at 100-150Hz of low pwm. Please, try it.
+
