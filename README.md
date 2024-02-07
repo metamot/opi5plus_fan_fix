@@ -69,3 +69,13 @@ Compile current text to dtb and replace boot-dtb.
     $ sudo reboot
     
 Your OrangePi5+ fan works at different speeds now!
+
+**PS**: You can directly change pwm-speed of fan using "/sys"-file.
+
+Here is Debian11(Armbian) example.
+
+    $ sudo echo 127 > /sys/devices/platform/pwm-fan/hwmon/hwmon9/pwm1
+
+Replace "127"(half of 255) with more values like "255"(full-speed), "127"(half-speed), "64 (one-quater-speed)", "192 = 3/4" and etc. 
+
+But sometimes driver will drop in nearest future this value to "0" due current tempereture measurement.
