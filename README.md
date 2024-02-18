@@ -73,16 +73,15 @@ Your OrangePi5+ fan works at different speeds now!
 **PS**: You can directly change pwm-speed of fan using "/sys"-file.
 
 Here is Debian11(Armbian) example.
+    $ su
+    # echo 127 > /sys/devices/platform/pwm-fan/hwmon/hwmon9/pwm1
 
-    $ sudo echo 127 > /sys/devices/platform/pwm-fan/hwmon/hwmon9/pwm1
+Pls, replace "127"(half of 255) with more values like "255"(full-speed), "127"(half-speed), "64 (one-quater-speed)", "192 = 3/4 speed" and etc. 
 
-Replace "127"(half of 255) with more values like "255"(full-speed), "127"(half-speed), "64 (one-quater-speed)", "192 = 3/4" and etc. 
-
-But sometimes driver will drop in nearest future this value to "0" due current tempereture measurement.
+NOTE: But sometimes in nearest future, the driver will drop this value to "0" due current tempereture measurement.
 
 **PS2**: 100Hz, can be 150, 125Hz?
 
 Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at low speed. You can do experiency with something other basic frequencies as 100,125,150, but below then 160Hz.
 
 Some of fans are really silent at 100-150Hz of low pwm. Please, try it.
-
