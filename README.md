@@ -81,7 +81,7 @@ Pls, replace "127"(half of 255) with more values like "255"(full-speed), "127"(h
 
 NOTE: But sometimes in nearest future, the driver will drop this value to "0" due current tempereture measurement.
 
-**PS2**: 100Hz, can be 150, 125Hz?
+**PS2**: 50Hz, 90Hz, 100Hz, 120Hz, 125Hz, 150Hz ... ?
 
 Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at low speed. You can do experiency with something other basic frequencies as 100,125,150, but below then 160Hz.
 
