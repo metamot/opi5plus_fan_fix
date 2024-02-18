@@ -83,6 +83,6 @@ NOTE: But sometimes in nearest future, the driver will drop this value to "0" du
 
 **PS2**: 50Hz, 90Hz, 100Hz, 120Hz, 125Hz, 150Hz ... ?
 
-Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at low speed. You can do experiency with something other basic frequencies as 100,125,150, but below then 160Hz.
+Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at pwm-low speed pulses. You can do experiency with something other basic frequencies as 50,100,125,150, but below then 160Hz.
 
 Some of fans are really silent at 100-150Hz of low pwm. Please, try it.
