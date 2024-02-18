@@ -73,6 +73,7 @@ Your OrangePi5+ fan works at different speeds now!
 **PS**: You can directly change pwm-speed of fan using "/sys"-file.
 
 Here is Debian11(Armbian) example.
+
     $ su
     # echo 127 > /sys/devices/platform/pwm-fan/hwmon/hwmon9/pwm1
 
