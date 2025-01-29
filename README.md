@@ -1,25 +1,25 @@
 # How to OrangePi5+ (OrangePi5plus) pwm fan fix
 
-This manual are for Armbian (other distro can be adapted).
+This manual is for Joshua Riek`s Ubuntu 24.04 (other distro can be adapted).
 
+The device tree with a.o. the info for the PWM fan is in 
+Dir: /lib/firmware/6.1.0-1025-rockchip/device-tree/rockchip
+File: rk3588-orangepi-5-plus.dtb
+
+I found this in /etc/default/u-boot
+variable U_BOOT_FDT
+
+Open terminal in directory /lib/firmware/6.1.0-1025-rockchip/device-tree
 Decompile current dtb to text.
+dtc -I dtb -O dts -o rk3588-orangepi-5-plus.dts /rockchip/rk3588-orangepi-5-plus.dtb
 
-    $ mkdir ~/my-dt
-    $ cp /boot/dtb/rockchip/rk3588-orangepi-5-plus.dtb ~/my-dt/original.dtb
-    $ dtc -I dtb -O dts -o ~/my-dt/dts.txt ~/my-dt/original.dtb
-
-Open dts.txt and find "pwm-fan" section. Look at "pwms" record.
-
+Open rk3588-orangepi-5-plus.dts and find "pwm-fan" section. Look at "pwms" record.
 For example: < A B C D >
-
 "B and D both are zero".
-
 "A" is link to pwm3.
-
 "C" is MOST IMPORTANT - it's PERIOD of ns (frequency).
 
 Here is example (Your pwm-fan section can look slight different) :
-
     pwm-fan {
         compatible = "pwm-fan";
         #cooling-cells = <0x02>;
@@ -27,29 +27,20 @@ Here is example (Your pwm-fan section can look slight different) :
         cooling-levels = <0x00 0x32 0x64 0x96 0xc8 0xff>;
         rockchip,temp-trips = <0xc350 0x01 0xd6d8 0x02 0xea60 0x03 0xfde8 0x04 0x11170 0x05>;
         status = "okay";
-        phandle = <0x4ac>;
+        phandle = <0x4b5>;
     };
 
 We can see "50000" or "0xc350", at 3rd parameter. It's 50'000 ns period (0xc350) = 20`000Hz = 20kHz.
-
 Pwm-fan schematic has RC-chain (R23+C16): 10K+100nF.
-
 ![alt text](https://github.com/metamot/opi5plus_fan_fix/blob/main/Untitled.png?raw=true)
-
 Fc=1/(2pi*R*C)=1/0.00628=160Hz.
-
 So, current DeviceTree settings with 20kHz acts as DC-voltage control (ON/OFF) with max fan speed under any conditions.
-
 You can desolder C16 capacitor, to solve this problem!
-
 (Can you really can locate this cap_0402 on unsilcscreeneed pcb?).
 
 **The other way** is to reduce pwm frequency to 100Hz!
-
 To reduce frequency replace 3rd pwms parameter to "10000000" (one+7zeros) = "10 million" (nanoseconds) = 0.01s = 100Hz.
-
 Here is example:
-
     pwm-fan {
         compatible = "pwm-fan";
         #cooling-cells = <0x02>;
@@ -57,32 +48,17 @@ Here is example:
         cooling-levels = <0x00 0x32 0x64 0x96 0xc8 0xff>;
         rockchip,temp-trips = <0xc350 0x01 0xd6d8 0x02 0xea60 0x03 0xfde8 0x04 0x11170 0x05>;
         status = "okay";
-        phandle = <0x4ac>;
+        phandle = <0x4b5>;
     };
-
 Take look at pwms record 3rd parameter replaced with 10000000. Your pwm-fan section can look slight different, but only one replacement you need to do, is change 3rd pwms parameter to 10000000.
 
-Compile current text to dtb and replace boot-dtb.
+Compile current dts (source) to dtb (binary)
+dtc -I dts -O dtb -o rk3588-orangepi-5-plus.dtb rk3588-orangepi-5-plus.dts
 
-    $ dtc -I dts -O dtb -o ~/my-dt/new.dtb ~/my-dt/dts.txt
-    $ sudo cp -f ~/my-dt/new.dtb /boot/dtb/rockchip/rk3588-orangepi-5-plus.dtb
-    $ sudo reboot
-    
+Run the u-boot-update utility to update the device tree to be loaded on the next reboot.
+sudo u-boot-update
+
+Reboot
 Your OrangePi5+ fan works at different speeds now!
-
-**PS**: You can directly change pwm-speed of fan using "/sys"-file.
-
-Here is Debian11(Armbian) example.
-
-    $ su
-    # echo 127 > /sys/devices/platform/pwm-fan/hwmon/hwmon9/pwm1
-
-Pls, replace "127"(half of 255) with more values like "255"(full-speed), "127"(half-speed), "64 (one-quater-speed)", "192 = 3/4 speed" and etc. 
-
-NOTE: But sometimes in nearest future, the driver will drop this value to "0" due current tempereture measurement.
-
-**PS2**: 50Hz, 90Hz, 100Hz, 120Hz, 125Hz, 150Hz ... ?
-
-Due to very low frequency, human ear can listen(!) low frequency from fan. This effect has known as "rumble sound from fan" at pwm-low speed pulses. You can do experiency with something other basic frequencies as 50,100,125,150, but below then 160Hz.
 
 Some of fans are really silent at 100-150Hz of low pwm. Please, try it.
